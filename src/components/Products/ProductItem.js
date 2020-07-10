@@ -1,15 +1,20 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+
+import { useStore } from '../../hooks-store/store';
 
 import Card from '../UI/Card';
 import './ProductItem.css';
-import { toggleFav } from '../../store/actions/products';
 
 const ProductItem = props => {
-  const dispatch = useDispatch();
+  // I am not interested here about store changes hence useStore(false)
+  const dispatch = useStore(false)[1];
 
   const toggleFavHandler = () => {
-    dispatch(toggleFav(props.id));
+    dispatch('TOGGLE_FAV', {
+      payload: {
+        productId: props.id
+      }
+    });
   };
 
   return (
@@ -28,4 +33,4 @@ const ProductItem = props => {
   );
 };
 
-export default ProductItem;
+export default React.memo(ProductItem);
